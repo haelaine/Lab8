@@ -76,9 +76,17 @@ it ('disabled honk button', () =>  {
 
 it ('error shown when number is typed outside of the given range', () => {
   cy.get('#volume-number').clear().type('103'); 
-  cy.get('#honk-btn').then($emptyEl => {
-    expect($emptyEl).to.match('input:invalid') ;
+  cy.get('#honk-btn').click(); 
+  cy.get('input:invalid').then($invalidInput => {
+    expect($invalidInput[0]).to.have.attr('id', 'volume-number')
   });
+
+  cy.get('#volume-number').clear().type('-10'); 
+  cy.get('#honk-btn').click(); 
+  cy.get('input:invalid').then($invalidInput => {
+    expect($invalidInput[0]).to.have.attr('id', 'volume-number')
+  });
+ 
 }); 
 
 });
